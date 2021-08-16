@@ -1,0 +1,35 @@
+{
+  "name": "back-end",
+  "version": "1.0.0",
+  "description": "back-end for national-blood-caravan",
+  "main": "Back-end",
+  "scripts": {
+    "start": "nodemon server.js"
+  },
+  "keywords": [],
+  "author": "Sakib-Ashraf",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.12"
+  },
+  "engines": {
+    "node": "14.17.0",
+    "npm": "7.20.3"
+  },
+  "dependencies": {
+    "bcrypt-nodejs": "^0.0.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "knex": "^0.95.7",
+    "pg": "^8.6.0",
+    "serve": "^12.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:Sakib-Ashraf/National-Blood-Caravan-Backend.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Sakib-Ashraf/National-Blood-Caravan-Backend/issues"
+  },
+  "homepage": "https://github.com/Sakib-Ashraf/National-Blood-Caravan-Backend#readme"
+}
