@@ -1,10 +1,21 @@
-const handleJoinDonor = (req, res, db, bcrypt) => {
-	const { name, username, mobileNo, email, birthDate, bloodGroup, gender, district, address, lastDonateDate, password, conPassword } = req.body;
+const handleReqForBlood = (req, res, db, bcrypt) => {
+	const {
+		name,
+		username,
+		mobileNo,
+		birthDate,
+		bloodGroup,
+		gender,
+		district,
+		address,
+		lastDonateDate,
+		password,
+		conPassword,
+	} = req.body;
 	if (
 		!name ||
 		!username ||
 		!mobileNo ||
-		!email ||
 		!birthDate ||
 		!bloodGroup ||
 		!gender ||
@@ -45,5 +56,5 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 };
 
 module.exports = {
-	handleJoinDonor,
+	handleReqForBlood,
 };
