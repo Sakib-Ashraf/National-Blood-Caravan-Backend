@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
 const register = require('./controller/register');
 const joinDonor = require('./controller/join-donor');
-const SignIn = require('./controller/signIn');
+const LogIn = require('./controller/LogIn');
 const donors = require('./controller/donors');
 const search = require('./controller/search');
 const profile = require('./controller/profile');
@@ -12,16 +12,21 @@ const recovery = require('./controller/recovery');
 const recentDonors = require('./controller/recentDonors');
 const bloodGroup = require('./controller/bloodGroup');
 const knex = require('knex');
-    
+ 
+
+//DATABASE CONNECTION
 const db = knex({
-    client: 'pg',
-    connection: {
-        connectionString: process.env.DATABASE_URL,
-        ssl: {
-            rejectUnauthorized: false
-        }
-    }
+	client: 'pg',
+	connection: {
+		host: '127.0.0.1', //localhost
+		user: 'postgres', //add your user name for the database here
+		password: 'postgreSQL', //add your correct password in here
+		database: 'nbc', //add your database name you created here
+	},
 });
+
+db.select('*').from('users').then(data => console.log(data));
+
 
 const app = express();
 
@@ -40,8 +45,8 @@ app.get('/', (req, res) => {
 
 // RESTFUL API
 
-app.post('/signin', (req, res) => {
-    SignIn.handleSignIn(req, res, db, bcrypt);
+app.post('/login', (req, res) => {
+    LogIn.handleLogIn(req, res, db, bcrypt);
 });
 
 app.post('/register', (req, res) => {
