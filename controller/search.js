@@ -1,20 +1,20 @@
 const handleSearch = (req, res, db) => {
-	const { district, bloodGroup } = req.params;
+	const { area, blood_group } = req.body;
 	db.select('*')
-		.from('users')
+		.from('donors')
 		.where({
-			district,
-			bloodGroup,
+			area,
+			blood_group
 		})
-		.then((user) => {
-			if (user.length) {
-				res.json(user[0]);
+		.then((donor) => {
+			if (donor.length) {
+				res.json(donor);
 			} else {
-				res.status(400).json('user not found');
+				res.status(400).json('donor not found');
 			}
 		})
 		.catch((err) => {
-			res.status(404).json('Error getting user');
+			res.status(404).json(err,'Error getting donor');
 		});
 };
 

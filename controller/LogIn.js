@@ -1,10 +1,11 @@
 const handleLogIn = (req, res, db, bcrypt) => {
-    const { emailOrMobile, password } = req.body;
-    if (!emailOrMobile || !password) {
-        return res.status(400).json('incorrect form submission');
-    }
+    const { email_or_mobile, password } = req.body;
+    console.log(req.body);
+    if (!email_or_mobile || !password) {
+		return res.status(400).json('incorrect form submission');
+	}
     db.select('email', 'hash', 'mobile').from('userslogin')
-        .where('email', '=', emailOrMobile || 'mobile', '=', emailOrMobile)
+        .where('email', '=', email_or_mobile || 'mobile', '=', email_or_mobile)
         .then(data => {
             const isValid = bcrypt.compareSync(password, data[0].hash);
             if (isValid) {
@@ -14,19 +15,19 @@ const handleLogIn = (req, res, db, bcrypt) => {
 					.where(
 						'email',
 						'=',
-						emailOrMobile || 'mobile',
+						email_or_mobile || 'mobile',
 						'=',
-						emailOrMobile
+						email_or_mobile
 					)
 					.then((user) => {
 						res.json(user[0]);
 					})
-					.catch((err) => res.status(400).json('User not found'));
+					.catch((err) => res.status(400).json(err, 'User not found'));
             } else {
                 res.status(400).json(`Didn't find a match`);
             }
         })
-        .catch(err => res.status(400).json('wrong credentials'));
+        .catch(err => res.status(400).json(err, 'wrong credentials'));
 };
 module.exports = {
     handleLogIn

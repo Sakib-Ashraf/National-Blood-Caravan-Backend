@@ -1,23 +1,18 @@
-const handleDonors = (req, res, db) => {
-	const { id, name } = req.params;
+const handleAllDonors = (req, res, db) => {
 	db.select('*')
-		.from('users')
-		.where({
-			id,
-			name,
-		})
-		.then((user) => {
-			if (user.length) {
-				res.json(user[0]);
+		.from('donors')
+		.then((donor) => {
+			if (donor.length) {
+				res.json(donor);
 			} else {
-				res.status(400).json('user not found');
+				res.status(400).json('donor not found');
 			}
 		})
 		.catch((err) => {
-			res.status(404).json('Error getting user');
+			res.status(404).json('Error getting donor');
 		});
 };
 
 module.exports = {
-	handleDonors,
+	handleAllDonors,
 };

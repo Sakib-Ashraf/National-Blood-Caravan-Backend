@@ -7,6 +7,7 @@ const LogIn = require('./controller/LogIn');
 const donors = require('./controller/donors');
 const search = require('./controller/search');
 const profile = require('./controller/profile');
+const UpdateProfile = require('./controller/updateProfile');
 const reqForBlood = require('./controller/ReqForBlood');
 const recovery = require('./controller/recovery');
 const recentDonors = require('./controller/recentDonors');
@@ -25,7 +26,7 @@ const db = knex({
 	},
 });
 
-db.select('*').from('users').then(data => console.log(data));
+db.select('*').from('donors').then(data => console.log(data));
 
 
 const app = express();
@@ -70,19 +71,23 @@ app.get('/recent-donors', (req, res) => {
 });
 
 app.get('/donors', (req, res) => {
-    donors.handleDonors(req, res, db);
+    donors.handleAllDonors(req, res, db);
 });
 
 app.get('/bgcard/:bg-group', (req, res) => {
     bloodGroup.handleBloodGroup(req, res, db);
 });
 
-app.get('/search', (req, res) => {
+app.post('/search', (req, res) => {
     search.handleSearch(req, res, db);
 });
 
-app.get('/donor-profile/:id/:name', (req, res) => {
-    profile.handleProfile(req, res, db);
+app.post('/donors/donor-profile/:id/:name', (req, res) => {
+	profile.handleProfile(req, res, db);
+});
+
+app.put('/donors/donor-profile/update/:id/:name', (req, res) => {
+	UpdateProfile.handleUpdateProfile(req, res, db);
 });
 
 

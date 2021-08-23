@@ -1,19 +1,22 @@
 const handleProfile = (req, res, db) => {
     const {
         id, name
-    } = req.params;
-    db.select('*').from('users').where({
+    } = req.body;
+    
+    console.log(req.body);
+    
+    db.select('*').from('donors').where({
         id, name
     })
-        .then(user => {
-            if (user.length) {
-                res.json(user[0]);
+        .then(donor => {
+            if (donor.length) {
+                res.json(donor[0]);
             } else {
-                res.status(400).json('user not found');
+                res.status(400).json('donor not found');
             }
         })
         .catch(err => {
-            res.status(404).json('Error getting user');
+            res.status(404).json('Error getting donor');
         });
 };
 

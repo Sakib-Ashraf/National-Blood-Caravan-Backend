@@ -1,18 +1,16 @@
 const handleJoinDonor = (req, res, db, bcrypt) => {
-	const { name, username, mobileNo, email, birthDate, bloodGroup, gender, district, address, lastDonateDate, password, conPassword } = req.body;
+	const { name, username, mobile, email, birth_date, blood_group, donated, gender, area, address, last_donate_date, password } = req.body;
 	if (
 		!name ||
 		!username ||
-		!mobileNo ||
-		!email ||
-		!birthDate ||
-		!bloodGroup ||
+		!mobile ||
+		!birth_date ||
+		!blood_group ||
 		!gender ||
-		!district ||
+		!area ||
 		!address ||
-		!lastDonateDate ||
-		!password ||
-		!conPassword
+		!last_donate_date ||
+		!password
 	) {
 		return res.status(400).json('incorrect form submission');
 	}
@@ -20,20 +18,30 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 	db.transaction((trx) => {
 		trx.insert({
 			hash: hash,
-			mobileNo: mobileNo,
+			mobile: mobile,
+			email: email,
 		})
-			.into('login')
-			.returning('mobileNo')
-			.then((loginMobileNO) => {
-				return trx('users')
+			.into('donorslogin')
+			.returning('mobile')
+			.then((loginMobile) => {
+				return trx('donors')
 					.returning('*')
 					.insert({
 						name: name,
-						mobileNo: loginMobileNO[0],
+						username: username,
+						mobile: loginMobile[0],
+						email: email,
+						birth_date: birth_date,
+						blood_group: blood_group,
+						donated: donated,
+						gender: gender,
+						area: area,
+						address: address,
+						last_donate_date: last_donate_date,
 						joined: new Date(),
 					})
-					.then((user) => {
-						res.json(user[0]);
+					.then((donor) => {
+						res.json(donor[0]);
 					})
 					.then(trx.commit)
 					.catch(trx.rollback);
