@@ -1,12 +1,12 @@
 const handleProfile = (req, res, db) => {
     const {
-        id, name
-    } = req.body;
+        id
+    } = req.params;
     
-    console.log(req.body);
+    console.log(req.params);
     
     db.select('*').from('donors').where({
-        id, name
+        id
     })
         .then(donor => {
             if (donor.length) {

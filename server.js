@@ -6,6 +6,7 @@ const joinDonor = require('./controller/join-donor');
 const LogIn = require('./controller/LogIn');
 const donors = require('./controller/donors');
 const search = require('./controller/search');
+const BGSearch = require('./controller/BGSearch');
 const profile = require('./controller/profile');
 const UpdateProfile = require('./controller/updateProfile');
 const reqForBlood = require('./controller/ReqForBlood');
@@ -25,8 +26,6 @@ const db = knex({
 		database: 'nbc', //add your database name you created here
 	},
 });
-
-db.select('*').from('donors').then(data => console.log(data));
 
 
 const app = express();
@@ -78,15 +77,27 @@ app.get('/bgcard/:bg-group', (req, res) => {
     bloodGroup.handleBloodGroup(req, res, db);
 });
 
-app.post('/search', (req, res) => {
-    search.handleSearch(req, res, db);
+app.get('/search/:area/:blood_group/:gender', (req, res) => {
+	search.handleSearch(req, res, db);
 });
 
-app.post('/donors/donor-profile/:id/:name', (req, res) => {
+app.get('/donors/:bg', (req, res) => {
+    BGSearch.handleBGSearch(req, res, db);
+});
+
+app.get('/donors/profile/:id', (req, res) => {
 	profile.handleProfile(req, res, db);
 });
 
-app.put('/donors/donor-profile/update/:id/:name', (req, res) => {
+// app.put('/counter/:id/:name', (req, res) => {
+// 	UpdateProfile.handleCounter(req, res, db);
+// });
+
+// app.put('/disabled/:id/:name', (req, res) => {
+// 	UpdateProfile.handleDisabler(req, res, db);
+// });
+
+app.put('/donors/profile/update/:id', (req, res) => {
 	UpdateProfile.handleUpdateProfile(req, res, db);
 });
 

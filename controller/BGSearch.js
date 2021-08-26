@@ -1,12 +1,9 @@
-const handleSearch = (req, res, db) => {
-	const { area, blood_group, gender } = req.params;
-	console.log(req.params);
+const handleBGSearch = (req, res, db) => {
+    const {bg} = req.params;
 	db.select('*')
 		.from('donors')
 		.where({
-			area: area,
-			blood_group: blood_group,
-			gender: gender,
+			blood_group: bg,
 		})
 		.then((donor) => {
 			if (donor.length) {
@@ -21,5 +18,5 @@ const handleSearch = (req, res, db) => {
 };
 
 module.exports = {
-	handleSearch,
+	handleBGSearch,
 };
