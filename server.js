@@ -14,6 +14,7 @@ const recovery = require('./controller/recovery');
 const recentDonors = require('./controller/recentDonors');
 const bloodGroup = require('./controller/bloodGroup');
 const knex = require('knex');
+const authJwt = require('./controller/auth/authJwt');
  
 
 //DATABASE CONNECTION
@@ -35,6 +36,14 @@ const app = express();
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 app.use(cors());
+ app.use(function (req, res, next) {
+		res.header(
+			'Access-Control-Allow-Headers',
+			'x-access-token, Origin, Content-Type, Accept'
+		);
+		next();
+ });
+
 
 
 //TESTING
@@ -43,10 +52,11 @@ app.get('/', (req, res) => {
 });
 
 
+
 // RESTFUL API
 
-app.post('/login', (req, res) => {
-    LogIn.handleLogIn(req, res, db, bcrypt);
+app.post('/login',  (req, res) => {
+	LogIn.handleLogIn(req, res, db, bcrypt);
 });
 
 app.post('/register', (req, res) => {
@@ -57,8 +67,8 @@ app.post('/join-donor', (req, res) => {
     joinDonor.handleJoinDonor(req, res, db, bcrypt);
 });
 
-app.post('/reqforblood', (req, res) => {
-    reqForBlood.handleReqForBlood(req, res, db, bcrypt);
+app.post('/reqforblood', [authJwt.verifyToken], (req, res) => {
+	reqForBlood.handleReqForBlood(req, res, db, bcrypt);
 });
 
 app.post('/recovery', (req, res) => {
@@ -85,19 +95,12 @@ app.get('/donors/:bg', (req, res) => {
     BGSearch.handleBGSearch(req, res, db);
 });
 
-app.get('/donors/profile/:id', (req, res) => {
+app.get('/donors/profile/:id', [authJwt.verifyToken], (req, res) => {
 	profile.handleProfile(req, res, db);
 });
 
-// app.put('/counter/:id/:name', (req, res) => {
-// 	UpdateProfile.handleCounter(req, res, db);
-// });
 
-// app.put('/disabled/:id/:name', (req, res) => {
-// 	UpdateProfile.handleDisabler(req, res, db);
-// });
-
-app.put('/donors/profile/update/:id', (req, res) => {
+app.put('/donors/profile/update/:id', [authJwt.verifyToken], (req, res) => {
 	UpdateProfile.handleUpdateProfile(req, res, db);
 });
 
