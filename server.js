@@ -1,20 +1,20 @@
 const express = require('express');
 const bcrypt = require('bcrypt-nodejs');
 const cors = require('cors');
-const register = require('./controller/register');
-const joinDonor = require('./controller/join-donor');
-const LogIn = require('./controller/LogIn');
-const donors = require('./controller/donors');
-const search = require('./controller/search');
-const BGSearch = require('./controller/BGSearch');
-const profile = require('./controller/profile');
-const UpdateProfile = require('./controller/updateProfile');
-const reqForBlood = require('./controller/ReqForBlood');
-const recovery = require('./controller/recovery');
-const recentDonors = require('./controller/recentDonors');
-const bloodGroup = require('./controller/bloodGroup');
+const register = require('./App/register');
+const joinDonor = require('./App/join-donor');
+const LogIn = require('./App/LogIn');
+const donors = require('./App/donors');
+const search = require('./App/search');
+const BGSearch = require('./App/BGSearch');
+const profile = require('./App/profile');
+const UpdateProfile = require('./App/updateProfile');
+const recovery = require('./App/recovery');
+const reqForBlood = require('./App/ReqForBlood');
+const recentDonors = require('./App/recentDonors');
+const bloodGroup = require('./App/bloodGroup');
 const knex = require('knex');
-const authJwt = require('./controller/auth/authJwt');
+const authJwt = require('./App/auth/authJwt');
  
 
 //DATABASE CONNECTION
@@ -33,7 +33,7 @@ const app = express();
 
 //MIDDLEWARE
 
-app.use(express.urlencoded({extended: false}));
+app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
  app.use(function (req, res, next) {
@@ -105,7 +105,7 @@ app.put('/donors/profile/update/:id', [authJwt.verifyToken], (req, res) => {
 });
 
 
-
-app.listen(3300, () => {
+const PORT = process.env.PORT || 3300;
+app.listen(PORT, () => {
     console.log(`app is running successfully on port 3300`);
 });
