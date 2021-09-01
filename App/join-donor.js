@@ -1,10 +1,12 @@
 const handleJoinDonor = (req, res, db, bcrypt) => {
-	const { name, username, mobile, email, age, blood_group, donated, gender, area, address, last_donate_date, password } = req.body;
+	const { name, username, mobile, email, age, birth_date, blood_group, donated, gender, area, address, last_donate_date, password } = req.body;
+	console.log(req.body);
 	if (
 		!name ||
 		!username ||
 		!mobile ||
 		!age ||
+		!birth_date ||
 		!blood_group ||
 		!gender ||
 		!area ||
@@ -21,7 +23,7 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 			mobile: mobile,
 			email: email,
 		})
-			.into('donorslogin')
+			.into('login')
 			.returning('mobile')
 			.then((loginMobile) => {
 				return trx('donors')
@@ -32,6 +34,7 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 						mobile: loginMobile[0],
 						email: email,
 						age: age,
+						birth_date: birth_date,
 						blood_group: blood_group,
 						donated: donated,
 						gender: gender,

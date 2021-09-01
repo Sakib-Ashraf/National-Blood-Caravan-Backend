@@ -7,7 +7,7 @@ const handleLogIn = (req, res, db, bcrypt) => {
 	console.log(req.body);
 
 	if (!mobile || !password) {
-		return res.status(400).json('incorrect form submission');
+		return res.status(400).json({ message: 'incorrect form submission' });
 	}
 
 	db.select('*')
@@ -30,20 +30,20 @@ const handleLogIn = (req, res, db, bcrypt) => {
 									expiresIn: 86400, // 24 hours
 								}
 							);
-							res.status(200).send({
+							res.status(200).json({
 								user: user[0],
 								accessToken: token,
 							});
 						})
 						.catch((err) =>
-							res.status(400).json(err, 'User not found')
+							res.status(400).json({ message: 'User not found!' })
 						)
 				);
 			} else {
-				res.status(400).json(`Didn't find a match`);
+				res.status(401).json({ message: `Didn't Find a Match for Credentials, Try Again!` });
 			}
 		})
-		.catch((err) => res.status(400).json(err, 'wrong credentials'));
+		.catch((err) => res.status(400).json({message: 'wrong credentials'}));
 };
 
 module.exports = {

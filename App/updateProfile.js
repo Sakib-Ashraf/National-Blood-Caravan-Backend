@@ -1,20 +1,12 @@
 
-
 const handleUpdateProfile = (req, res, db) => {
 	const { activation_date, last_donate_date, disablerValue } = req.body;
 	const { id} = req.params;
 
 	console.log(req.body);
-	if (
-		!activation_date ||
-		!last_donate_date ||
-		!disablerValue
-	) {
-		return res.status(400).json('incorrect form submission');
-	}
 
 	db.from('donors')
-		.where({ id })
+		.where({ id: id })
 		.increment('donated', 1)
 		.update({
 			activation_date: activation_date,
@@ -23,7 +15,6 @@ const handleUpdateProfile = (req, res, db) => {
 		})
 		.returning('*')
 		.then((resp) => {
-			console.log(resp[0]);
 			if (resp) {
 				res.json(resp[0]);
 			} else {
@@ -31,7 +22,7 @@ const handleUpdateProfile = (req, res, db) => {
 			}
 		})
 		.catch((err) => {
-			res.status(404).json(err, 'Error Updating Profile');
+			res.status(404).json({ message: 'Error Updating Profile' });
 		});
 };
 

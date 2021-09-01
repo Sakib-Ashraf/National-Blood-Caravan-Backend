@@ -9,6 +9,8 @@ const search = require('./App/search');
 const BGSearch = require('./App/BGSearch');
 const profile = require('./App/profile');
 const UpdateProfile = require('./App/updateProfile');
+const EditProfile = require('./App/EditProfile');
+const ChangePassword = require('./App/ChangePassword');
 const recovery = require('./App/recovery');
 const reqForBlood = require('./App/ReqForBlood');
 const recentDonors = require('./App/recentDonors');
@@ -51,11 +53,11 @@ app.get('/', (req, res) => {
 	res.send('Success');
 });
 
-
+// [authJwt.verifyToken],
 
 // RESTFUL API
 
-app.post('/login',  (req, res) => {
+app.post('/login', (req, res) => {
 	LogIn.handleLogIn(req, res, db, bcrypt);
 });
 
@@ -67,8 +69,12 @@ app.post('/join-donor', (req, res) => {
     joinDonor.handleJoinDonor(req, res, db, bcrypt);
 });
 
-app.post('/reqforblood', [authJwt.verifyToken], (req, res) => {
-	reqForBlood.handleReqForBlood(req, res, db, bcrypt);
+app.post('/blood-request',  (req, res) => {
+	reqForBlood.handleReqForBlood(req, res, db);
+});
+
+app.get('/reqbginfo',  (req, res) => {
+	reqForBlood.handleReq(req, res, db);
 });
 
 app.post('/recovery', (req, res) => {
@@ -95,13 +101,21 @@ app.get('/donors/:bg', (req, res) => {
     BGSearch.handleBGSearch(req, res, db);
 });
 
-app.get('/donors/profile/:id', [authJwt.verifyToken], (req, res) => {
+app.get('/donors/profile/:id',  (req, res) => {
 	profile.handleProfile(req, res, db);
 });
 
 
-app.put('/donors/profile/update/:id', [authJwt.verifyToken], (req, res) => {
+app.put('/donors/profile/update/:id',  (req, res) => {
 	UpdateProfile.handleUpdateProfile(req, res, db);
+});
+
+app.put('/donors/profile/edit/:id',  (req, res) => {
+	EditProfile.handleEditProfile(req, res, db);
+});
+
+app.put('/donors/profile/change-password/:id',  (req, res) => {
+	ChangePassword.handleChangePassword(req, res, db, bcrypt);
 });
 
 
