@@ -56,64 +56,64 @@ app.get('/', (req, res) => {
 
 // RESTFUL API
 
-app.post('/login', (req, res) => {
+app.post('/api/login', (req, res) => {
 	LogIn.handleLogIn(req, res, db, bcrypt);
 });
 
-app.post('/register', (req, res) => {
+app.post('/api/register', (req, res) => {
     register.handleRegister(req, res, db, bcrypt);
 });
 
-app.post('/join-donor', (req, res) => {
+app.post('/api/join-donor', (req, res) => {
     joinDonor.handleJoinDonor(req, res, db, bcrypt);
 });
 
-app.post('/blood-request',  (req, res) => {
+app.post('/api/blood-request',  (req, res) => {
 	reqForBlood.handleReqForBlood(req, res, db);
 });
 
-app.get('/reqbginfo',  (req, res) => {
+app.get('/api/reqbginfo',  (req, res) => {
 	reqForBlood.handleReq(req, res, db);
 });
 
-app.post('/recovery', (req, res) => {
+app.post('/api/recovery', (req, res) => {
     recovery.handleRecovery(req, res, db, bcrypt);
 });
 
-app.get('/recent-donors', (req, res) => {
+app.get('/api/recent-donors', (req, res) => {
     recentDonors.handleRecentDonors(req, res, db);
 });
 
-app.get('/donors', (req, res) => {
+app.get('/api/donors', (req, res) => {
     donors.handleAllDonors(req, res, db);
 });
 
-app.get('/bgcard/:bg-group', (req, res) => {
+app.get('/api/bgcard/:bg-group', (req, res) => {
     bloodGroup.handleBloodGroup(req, res, db);
 });
 
-app.get('/search/:area/:blood_group/:gender', (req, res) => {
+app.get('/api/search/:area/:blood_group/:gender', (req, res) => {
 	search.handleSearch(req, res, db);
 });
 
-app.get('/donors/:bg', (req, res) => {
+app.get('/api/donors/:bg', (req, res) => {
     BGSearch.handleBGSearch(req, res, db);
 });
 
-app.get('/donors/profile/:id',  (req, res) => {
+app.get('/api/donors/profile/:id',  (req, res) => {
 	profile.handleProfile(req, res, db);
 });
 
 
-app.put('/donors/profile/update/:id',  (req, res) => {
+app.put('/api/donors/profile/update/:id',  (req, res) => {
 	UpdateProfile.handleUpdateProfile(req, res, db);
 });
 
-app.put('/donors/profile/edit/:id',  (req, res) => {
+app.put('/api/donors/profile/edit/:id',  (req, res) => {
 	EditProfile.handleEditProfile(req, res, db);
 });
 
-app.put('/donors/profile/change-password/:id',  (req, res) => {
+app.put('/api/donors/profile/change-password/:id',  (req, res) => {
 	ChangePassword.handleChangePassword(req, res, db, bcrypt);
 });
 
