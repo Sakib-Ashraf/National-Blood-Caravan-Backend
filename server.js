@@ -16,7 +16,6 @@ const reqForBlood = require('./App/ReqForBlood');
 const recentDonors = require('./App/recentDonors');
 const bloodGroup = require('./App/bloodGroup');
 const knex = require('knex');
-const authJwt = require('./App/auth/authJwt');
  
 
 //DATABASE CONNECTION

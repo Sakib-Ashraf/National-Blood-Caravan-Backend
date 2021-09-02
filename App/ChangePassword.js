@@ -8,14 +8,14 @@ const handleChangePassword = (req, res, db, bcrypt) => {
 	}
 
 db.select('*').from('login')
-	.where({ id: 18 })
+	.where({ id: id })
 	.then((data) => {
 		const isValid = bcrypt.compareSync(OldPassword, data[0].hash);
         if (isValid) {
             const hash = bcrypt.hashSync(NewPassword);
 			return db
 				.from('login')
-				.where({ id: 18 })
+				.where({ id: id })
 				.update({
 					hash: hash,
 				})
