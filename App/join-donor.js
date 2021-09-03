@@ -1,5 +1,5 @@
 const handleJoinDonor = (req, res, db, bcrypt) => {
-	const { name, username, mobile, email, age, birth_date, blood_group, donated, gender, area, address, last_donate_date, password } = req.body;
+	const { name, username, mobile, email, age, birth_date, blood_group, donated, gender, area, address, last_donate_date, password, activation_date, disablervalue } = req.body;
 	console.log(req.body);
 	if (
 		!name ||
@@ -42,6 +42,8 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 						address: address,
 						last_donate_date: last_donate_date,
 						joined: new Date(),
+						activation_date: null,
+						disablervalue: false,
 					})
 					.then((donor) => {
 						console.log(donor);
