@@ -27,7 +27,7 @@ const handleReqForBlood = (req, res, db) => {
 		!illness ||
 		!hospital_address
 	) {
-		return res.status(400).json('incorrect form submission');
+		return res.status(400).json({message: 'incorrect form submission'});
 	}
 	db.insert({
 			name: name,
@@ -48,10 +48,9 @@ const handleReqForBlood = (req, res, db) => {
 		.returning('*')
 		.then((resp) => {
 			res.status(200).json(resp[0]);
-			console.log('success');
 		})
 		.catch((err) =>
-			res.status(400).json('Wrong info or already requested')
+			res.status(400).json({message: 'Wrong info or already requested'})
 		);
 };
 
@@ -62,15 +61,36 @@ const handleReq = (req, res, db,) => {
 			if (data.length) {
 				res.json(data);
 			} else {
-				res.status(400).json('Blood Request Data not Found!');
+				res.status(400).json({message: 'Blood Request Data not Found!'});
 			}
 		})
 		.catch((err) => {
-			res.status(404).json(err, 'Error getting Requested Data!');
+			res.status(404).json( {message: 'Error getting Requested Data!'});
+		});
+};
+
+const handleReqData = (req, res, db) => {
+	const { id } = req.params;
+
+	db.select('*')
+		.from('blood_requests')
+		.where({
+			id,
+		})
+		.then((data) => {
+			if (data.length) {
+				res.json(data[0]);
+			} else {
+				res.status(400).json({message : 'data not found'});
+			}
+		})
+		.catch((err) => {
+			res.status(404).json({message : 'Error getting data'});
 		});
 };
 
 module.exports = {
 	handleReqForBlood,
 	handleReq,
+	handleReqData
 };

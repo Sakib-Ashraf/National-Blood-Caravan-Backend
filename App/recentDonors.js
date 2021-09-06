@@ -10,11 +10,11 @@ const handleRecentDonors = (req, res, db) => {
 			if (user.length) {
 				res.json(user[0]);
 			} else {
-				res.status(400).json('user not found');
+				res.status(400).json({message:'user not found'});
 			}
 		})
 		.catch((err) => {
-			res.status(404).json('Error getting user');
+			res.status(404).json({message:'Error getting user'});
 		});
 };
 

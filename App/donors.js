@@ -5,11 +5,11 @@ const handleAllDonors = (req, res, db) => {
 			if (donor.length) {
 				res.json(donor);
 			} else {
-				res.status(400).json('donor not found');
+				res.status(400).json({message:'donor not found'});
 			}
 		})
 		.catch((err) => {
-			res.status(404).json('Error getting donor');
+			res.status(404).json({message:'Error getting donor'});
 		});
 };
 

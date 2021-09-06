@@ -56,8 +56,12 @@ app.get('/api', (req, res) => {
 
 // RESTFUL API
 
-app.post('/api/login', (req, res) => {
-	LogIn.handleLogIn(req, res, db, bcrypt);
+app.post('/api/user-login', (req, res) => {
+	LogIn.handleUserLogIn(req, res, db, bcrypt);
+});
+
+app.post('/api/donor-login', (req, res) => {
+	LogIn.handleDonorLogIn(req, res, db, bcrypt);
 });
 
 app.post('/api/register', (req, res) => {
@@ -74,6 +78,9 @@ app.post('/api/blood-request',  (req, res) => {
 
 app.get('/api/reqbginfo',  (req, res) => {
 	reqForBlood.handleReq(req, res, db);
+});
+app.get('/api/users/request/:id', (req, res) => {
+	reqForBlood.handleReqData(req, res, db);
 });
 
 app.post('/api/recovery', (req, res) => {
