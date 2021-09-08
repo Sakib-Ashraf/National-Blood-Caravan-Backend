@@ -11,7 +11,6 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 		!gender ||
 		!area ||
 		!address ||
-		!last_donate_date ||
 		!password
 	) {
 		return res.status(400).json({message: 'incorrect form submission'});
