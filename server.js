@@ -83,8 +83,12 @@ app.get('/api/users/request/:id', (req, res) => {
 	reqForBlood.handleReqData(req, res, db);
 });
 
-app.post('/api/recovery', (req, res) => {
-    recovery.handleRecovery(req, res, db, bcrypt);
+app.put('/api/user-recovery', (req, res) => {
+    recovery.handleUserRecovery(req, res, db, bcrypt);
+});
+
+app.put('/api/donor-recovery', (req, res) => {
+    recovery.handleDonorRecovery(req, res, db, bcrypt);
 });
 
 app.get('/api/recent-donors', (req, res) => {
@@ -120,8 +124,11 @@ app.put('/api/donors/profile/edit/:id',  (req, res) => {
 	EditProfile.handleEditProfile(req, res, db);
 });
 
-app.put('/api/donors/profile/change-password/:id',  (req, res) => {
-	ChangePassword.handleChangePassword(req, res, db, bcrypt);
+app.put('/api/donors/profile/user-change-password/:id',  (req, res) => {
+	ChangePassword.handleUserChangePassword(req, res, db, bcrypt);
+});
+app.put('/api/donors/profile/donor-change-password/:id',  (req, res) => {
+	ChangePassword.handleDonorChangePassword(req, res, db, bcrypt);
 });
 
 
