@@ -51,7 +51,8 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 					.catch(trx.rollback);
 			})
 			.catch((err) =>
-				res.status(400).json({message: 'Wrong info or already registered'})
+				{console.log(err);
+				res.status(400).json({message: 'Wrong info or already registered'})}
 			);
 	}).catch((err) => res.status(400).json({message: 'Unable to register'}));
 };
