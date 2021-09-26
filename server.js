@@ -21,11 +21,13 @@ const knex = require('knex');
 //DATABASE CONNECTION
 const db = knex({
 	client: 'pg',
-	connection: {
-		host: '127.0.0.1', //localhost
-		user: 'postgres', //add your user name for the database here
-		password: 'postgreSQL', //add your correct password in here
-		database: 'nbc', //add your database name you created here
+	connection: () => {
+		return {
+			host: '127.0.0.1', //localhost
+			user: 'postgres', //add your user name for the database here
+			password: 'postgreSQL', //add your correct password in here
+			database: 'nbc', //add your database name you created here
+		};
 	},
 });
 
@@ -37,7 +39,7 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
- app.use(function (req, res, next) {
+app.use((req, res, next) => {
 		res.header(
 			'Access-Control-Allow-Headers',
 			'x-access-token, Origin, Content-Type, Accept'
