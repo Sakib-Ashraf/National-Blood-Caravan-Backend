@@ -8,6 +8,7 @@ const handleRecentDonors = (req, res, db) => {
 		})
 		.then((user) => {
 			const filteredUser = user.slice(Math.max(user.length - 10));
+			console.log(filteredUser);
 			if (user.length) {
 				res.json(filteredUser);
 			} else {
