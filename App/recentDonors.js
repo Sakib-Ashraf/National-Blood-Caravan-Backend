@@ -1,22 +1,18 @@
 const handleRecentDonors = (req, res, db) => {
 	const { id, name } = req.params;
 	db.select('*')
-		.from('users')
-		.where({
-			id,
-			name,
-		})
-		.then((user) => {
-			const filteredUser = user.slice(Math.max(user.length - 10));
-			if (user.length) {
-				res.json(filteredUser);
+		.from('donors')
+		.then((donor) => {
+			const filteredDonors = donor.slice(Math.max(donor.length - 10));
+			if (donor.length) {
+				res.json(filteredDonors);
 			} else {
-				res.status(400).json({message:'user not found'});
+				res.status(400).json({message:'donor not found'});
 			}
 		})
 		.catch((err) => {
 			console.log(err);
-			res.status(404).json({message:'Error getting user'});
+			res.status(404).json({message:'Error getting donor'});
 		});
 };
 
