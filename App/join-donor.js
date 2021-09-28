@@ -1,6 +1,5 @@
 const handleJoinDonor = (req, res, db, bcrypt) => {
 	const { name, username, mobile, email, age, birth_date, blood_group, donated, gender, area, address, last_donate_date, password, activation_date } = req.body.donor;
-	console.log(req.body.donor);
 	if (
 		!name ||
 		!username ||
@@ -44,17 +43,20 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 						activation_date: null,
 					})
 					.then((donor) => {
-						console.log(donor);
 						res.json(donor[0]);
 					})
 					.then(trx.commit)
 					.catch(trx.rollback);
 			})
-			.catch((err) =>
-				{console.log(err);
-				res.status(400).json({message: 'Wrong info or already registered'})}
+			.catch((err) => {
+				console.log(err);
+				res.status(400).json({ message: 'Wrong info or already registered' });
+			}
 			);
-	}).catch((err) => res.status(400).json({message: 'Unable to register'}));
+	}).catch((err) => {
+		console.log(err);
+		res.status(400).json({ message: 'Unable to register' });
+	});
 };
 
 module.exports = {

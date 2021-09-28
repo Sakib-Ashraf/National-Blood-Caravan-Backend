@@ -1,7 +1,6 @@
 const handleRegister = (req, res, db, bcrypt) => {
 	const { name, username, mobile, email, password } = req.body.user;
 	
-console.log(req.body.user);
 	if (
 		!name ||
 		!username ||
@@ -14,9 +13,9 @@ console.log(req.body.user);
 	const hash = bcrypt.hashSync(password);
 	db.transaction((trx) => {
 		trx.insert({
-            hash: hash,
-            mobile: mobile,
-            email: email,
+			hash: hash,
+			mobile: mobile,
+			email: email,
 		})
 			.into('userslogin')
 			.returning('mobile')
@@ -24,9 +23,9 @@ console.log(req.body.user);
 				return trx('users')
 					.returning('*')
 					.insert({
-                        name: name,
-                        username: username,
-                        mobile: loginMobile[0],
+						name: name,
+						username: username,
+						mobile: loginMobile[0],
 						email: email,
 						joined: new Date(),
 					})
@@ -36,10 +35,15 @@ console.log(req.body.user);
 					.then(trx.commit)
 					.catch(trx.rollback);
 			})
-			.catch((err) =>
-				res.status(400).json('Wrong info or already registered')
+			.catch((err) => {
+				console.log(err);
+				res.status(400).json('Wrong info or already registered');
+			}
 			);
-	}).catch((err) => res.status(400).json('Unable to register'));
+	}).catch((err) => {
+		console.log(err);
+		res.status(400).json('Unable to register');
+	});
 };
 
 module.exports = {

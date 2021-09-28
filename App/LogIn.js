@@ -4,8 +4,6 @@ const config = require('./auth/config/auth.config');
 const handleDonorLogIn = (req, res, db, bcrypt) => {
 	const { mobile, password } = req.body;
 
-	console.log(req.body);
-
 	if (!mobile || !password) {
 		return res.status(400).json({ message: 'incorrect form submission' });
 	}
@@ -34,22 +32,25 @@ const handleDonorLogIn = (req, res, db, bcrypt) => {
 								accessToken: token,
 							});
 						})
-						.catch((err) =>
-							res.status(400).json({ message: 'User not found!' })
+						.catch((err) => {
+							console.log(err);
+							res.status(400).json({ message: 'User not found!' });
+						}
 						)
 				);
 			} else {
 				res.status(401).json({ message: `Didn't Find a Match for Credentials, Try Again!` });
 			}
 		})
-		.catch((err) => res.status(400).json({message: 'wrong credentials'}));
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json({ message: 'wrong credentials' });
+		});
 };
 
 
 const handleUserLogIn = (req, res, db, bcrypt) => {
 	const { mobile, password } = req.body;
-
-	console.log(req.body);
 
 	if (!mobile || !password) {
 		return res.status(400).json({ message: 'incorrect form submission' });
@@ -79,15 +80,20 @@ const handleUserLogIn = (req, res, db, bcrypt) => {
 								accessToken: token,
 							});
 						})
-						.catch((err) =>
-							res.status(400).json({ message: 'User not found!' })
+						.catch((err) => {
+							console.log(err);
+							res.status(400).json({ message: 'User not found!' });
+						}
 						)
 				);
 			} else {
 				res.status(401).json({ message: `Didn't Find a Match for Credentials, Try Again!` });
 			}
 		})
-		.catch((err) => res.status(400).json({message: 'wrong credentials'}));
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json({ message: 'wrong credentials' });
+		});
 };
 
 module.exports = {

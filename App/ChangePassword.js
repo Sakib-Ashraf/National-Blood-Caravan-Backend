@@ -24,8 +24,10 @@ db.select('*').from('donorslogin')
 						message: 'Success!',
 					});
 				})
-				.catch((err) =>
-					res.status(400).json({ message: 'User not found!' })
+				.catch((err) => {
+					console.log(err);
+					res.status(400).json({ message: 'User not found!' });
+				}
 				);
 		} else {
 			res.status(401).json({
@@ -34,6 +36,7 @@ db.select('*').from('donorslogin')
 		}
 	})
 		.catch((err) => {
+			console.log(err);
 			res.status(404).json({ message: 'Error Updating Profile' });
 		});
 };
@@ -64,16 +67,18 @@ db.select('*').from('userslogin')
 						message: 'Success!',
 					});
 				})
-				.catch((err) =>
-					res.status(400).json({ message: 'User not found!' })
-				);
+				.catch((err) => {
+					console.log(err);
+					res.status(400).json({ message: 'User not found!' });
+				});
 		} else {
 			res.status(401).json({
 				message: `Didn't Find a Match for Credentials, Try Again!`,
 			});
 		}
 	})
-		.catch((err) => {
+	.catch((err) => {
+			console.log(err);
 			res.status(404).json({ message: 'Error Updating Profile' });
 		});
 };

@@ -14,8 +14,6 @@ const handleReqForBlood = (req, res, db) => {
 		message,
 	} = req.body;
 
-	console.log(req.body);
-
 	if (
 		!name ||
 		!mobile ||
@@ -49,8 +47,10 @@ const handleReqForBlood = (req, res, db) => {
 		.then((resp) => {
 			res.status(200).json(resp[0]);
 		})
-		.catch((err) =>
-			res.status(400).json({message: 'Wrong info or already requested'})
+		.catch((err) => {
+			console.log(err);
+			res.status(400).json({ message: 'Wrong info or already requested' });
+		}
 		);
 };
 
@@ -58,13 +58,15 @@ const handleReq = (req, res, db,) => {
 	db.select('*')
 		.from('blood_requests')
 		.then((data) => {
+			const filteredData = data.slice(Math.max(data.length - 10));
 			if (data.length) {
-				res.json(data);
+				res.json(filteredData);
 			} else {
 				res.status(400).json({message: 'Blood Request Data not Found!'});
 			}
 		})
 		.catch((err) => {
+			console.log(err);
 			res.status(404).json( {message: 'Error getting Requested Data!'});
 		});
 };
@@ -78,6 +80,7 @@ const handleReqData = (req, res, db) => {
 			id,
 		})
 		.then((data) => {
+			console.log(data);
 			if (data.length) {
 				res.json(data[0]);
 			} else {
@@ -85,6 +88,7 @@ const handleReqData = (req, res, db) => {
 			}
 		})
 		.catch((err) => {
+			console.log(err);
 			res.status(404).json({message : 'Error getting data'});
 		});
 };

@@ -7,13 +7,15 @@ const handleRecentDonors = (req, res, db) => {
 			name,
 		})
 		.then((user) => {
+			const filteredUser = user.slice(Math.max(user.length - 10));
 			if (user.length) {
-				res.json(user[0]);
+				res.json(filteredUser);
 			} else {
 				res.status(400).json({message:'user not found'});
 			}
 		})
 		.catch((err) => {
+			console.log(err);
 			res.status(404).json({message:'Error getting user'});
 		});
 };

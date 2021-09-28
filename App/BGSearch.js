@@ -6,6 +6,7 @@ const handleBGSearch = (req, res, db) => {
 			blood_group: bg,
 		})
 		.then((donor) => {
+			console.log(donor);
 			if (donor.length) {
 				res.json(donor);
 			} else {
@@ -13,6 +14,7 @@ const handleBGSearch = (req, res, db) => {
 			}
 		})
 		.catch((err) => {
+			console.log(err);
 			res.status(404).json({message:'Error getting donor'});
 		});
 };

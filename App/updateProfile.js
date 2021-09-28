@@ -41,9 +41,6 @@ let lastDonate = last_donate_date();
 const handleUpdateProfile = (req, res, db) => {
 	const { id} = req.params;
 
-
-	console.log(addDaysAns, lastDonate);
-
 	db.from('donors')
 		.where({ id: id })
 		.increment('donated', 1)
@@ -60,6 +57,7 @@ const handleUpdateProfile = (req, res, db) => {
 			}
 		})
 		.catch((err) => {
+			console.log(err);
 			res.status(404).json({ message: 'Error Updating Profile' });
 		});
 };

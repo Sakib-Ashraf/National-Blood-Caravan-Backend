@@ -2,8 +2,6 @@ const handleEditProfile = (req, res, db) => {
     const { name, email, mobile, birth_date, area, address } = req.body;
     const { id } = req.params;
 
-    console.log(req.body);
-
     db.from('login')
         .where({ id: id })
         .update({
@@ -32,10 +30,12 @@ const handleEditProfile = (req, res, db) => {
                     }
                 })
                 .catch((err) => {
+                    console.log(err);
                     res.status(404).json({ message: 'Wrong info or already Updated' });
                 });
         })
         .catch((err) => {
+            console.log(err);
             res.status(404).json({ message: 'Error Updating Profile' });
         });
 };
