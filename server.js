@@ -16,6 +16,7 @@ const reqForBlood = require('./App/ReqForBlood');
 const recentDonors = require('./App/recentDonors');
 const bloodGroup = require('./App/bloodGroup');
 const knex = require('knex');
+const helmet = require('helmet');
  
 
 //DATABASE CONNECTION
@@ -35,7 +36,7 @@ const db = knex({
 const app = express();
 
 //MIDDLEWARE
-
+app.use(helmet());
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 app.use(cors());
