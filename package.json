@@ -1,5 +1,5 @@
 {
-  "name": "back-end",
+  "name": "nbc_backend",
   "version": "1.0.0",
   "description": "back-end for national-blood-caravan",
   "main": "Back-end",
@@ -13,8 +13,8 @@
     "nodemon": "^2.0.12"
   },
   "engines": {
-    "node": "14.17.0",
-    "npm": "7.20.3"
+    "node": "^14.17.0",
+    "npm": "^7.20.3"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
@@ -28,10 +28,7 @@
     "sequelize": "^6.6.5",
     "serve": "^12.0.0"
   },
-  "repository": {
-    "type": "git",
-    "url": "git@github.com:Sakib-Ashraf/National-Blood-Caravan-Backend.git"
-  },
+  "repository": "git@github.com:Sakib-Ashraf/National-Blood-Caravan-Backend.git",
   "bugs": {
     "url": "https://github.com/Sakib-Ashraf/National-Blood-Caravan-Backend/issues"
   },
