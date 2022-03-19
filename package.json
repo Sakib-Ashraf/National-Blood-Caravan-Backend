@@ -13,7 +13,7 @@
     "nodemon": "^2.0.12"
   },
   "engines": {
-    "node": "^14.17.0",
+    "node": "^16.13.1",
     "npm": "^7.20.3"
   },
   "dependencies": {
