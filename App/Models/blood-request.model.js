@@ -1,15 +1,11 @@
 module.exports = (sequelize, Sequelize) => {
-	const donor = sequelize.define('donors', {
+	const blood_requests = sequelize.define('blood_requests', {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
 			autoIncrement: true,
 		},
 		name: {
-			type: Sequelize.STRING,
-			allowNull: false,
-		},
-		username: {
 			type: Sequelize.STRING,
 			allowNull: false,
 		},
@@ -23,16 +19,8 @@ module.exports = (sequelize, Sequelize) => {
 			allowNull: false,
 			foreignKey: true,
 		},
-		password: {
-			type: Sequelize.STRING,
-			allowNull: false,
-		},
 		age: {
 			type: Sequelize.STRING,
-			allowNull: false,
-		},
-		birth_date: {
-			type: Sequelize.DATE,
 			allowNull: false,
 		},
 		blood_group: {
@@ -43,10 +31,6 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.TEXT,
 			allowNull: false,
 		},
-		donated: {
-			type: Sequelize.INTEGER,
-			allowNull: false,
-		},
 		area: {
 			type: Sequelize.TEXT,
 			allowNull: false,
@@ -55,19 +39,27 @@ module.exports = (sequelize, Sequelize) => {
 			type: Sequelize.STRING,
 			allowNull: false,
 		},
-		last_donate_date: {
-			type: Sequelize.DATE,
+		hospital_address: {
+			type: Sequelize.STRING,
 			allowNull: false,
 		},
-		joined: {
-			type: Sequelize.DATE,
+		message: {
+			type: Sequelize.STRING,
+			allowNull: true,
+		},
+		number_of_units: {
+			type: Sequelize.INTEGER,
 			allowNull: false,
+		},
+		illness: {
+			type: Sequelize.STRING,
+			allowNull: false,
+		},
+		requested_on: {
+			type: Sequelize.DATE,
 			defaultValue: Sequelize.NOW,
-		},
-		activation_date: {
-			type: Sequelize.DATE,
 		},
 	});
 
-	return donor;
+	return blood_requests;
 };

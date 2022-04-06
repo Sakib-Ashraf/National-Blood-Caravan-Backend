@@ -21,6 +21,7 @@ db.sequelize = sequelize;
 
 db.user = require('../models/user.model.js')(sequelize, Sequelize);
 db.donor = require('../models/donor.model.js')(sequelize, Sequelize);
+db.bloodRequest = require('../models/blood-request.model.js')(sequelize, Sequelize);
 db.role = require('../models/role.model.js')(sequelize, Sequelize);
 db.refreshToken = require('../models/refreshToken.model.js')(
 	sequelize,
@@ -44,15 +45,31 @@ db.user.belongsToMany(db.role, {
 });
 db.donor.belongsToMany(db.role, {
 	through: 'user_roles',
-	foreignKey: 'userId',
+	foreignKey: 'donorId',
 	otherKey: 'roleId',
 });
 
+db.bloodRequest.belongsTo(db.user, {
+	foreignKey: 'userId',
+	targetKey: 'id',
+});
+db.bloodRequest.belongsTo(db.donor, {
+	foreignKey: 'userId',
+	targetKey: 'id',
+});
 db.refreshToken.belongsTo(db.user, {
 	foreignKey: 'userId',
 	targetKey: 'id',
 });
 db.refreshToken.belongsTo(db.donor, {
+	foreignKey: 'userId',
+	targetKey: 'id',
+});
+db.user.hasMany(db.bloodRequest, {
+	foreignKey: 'userId',
+	targetKey: 'id',
+});
+db.donor.hasMany(db.bloodRequest, {
 	foreignKey: 'userId',
 	targetKey: 'id',
 });

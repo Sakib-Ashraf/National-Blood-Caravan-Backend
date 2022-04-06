@@ -9,10 +9,11 @@ const handleDonorLogIn = (req, res, db, bcrypt) => {
 	}
 
 	db.select('*')
-		.from('donorslogin')
+		.from('donors')
 		.where('mobile', '=', mobile)
 		.then((data) => {
-			const isValid = bcrypt.compareSync(password, data[0].hash);
+			console.log(data);
+			const isValid = bcrypt.compareSync(password, data[0].password);
 			if (isValid) {
 				return (
 					db
@@ -57,10 +58,10 @@ const handleUserLogIn = (req, res, db, bcrypt) => {
 	}
 
 	db.select('*')
-		.from('userslogin')
+		.from('users')
 		.where('mobile', '=', mobile)
 		.then((data) => {
-			const isValid = bcrypt.compareSync(password, data[0].hash);
+			const isValid = bcrypt.compareSync(password, data[0].password);
 			if (isValid) {
 				return (
 					db

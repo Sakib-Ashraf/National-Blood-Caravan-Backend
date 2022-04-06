@@ -28,19 +28,21 @@ const handleReqForBlood = (req, res, db) => {
 		return res.status(400).json({message: 'incorrect form submission'});
 	}
 	db.insert({
-			name: name,
-			mobile: mobile,
-			email: email,
-			age: age,
-			blood_group: blood_group,
-			gender: gender,
-			area: area,
-			address: address,
-			number_of_units: number_of_units,
-			illness: illness,
-			hospital_address: hospital_address,
-			message: message,
-			requested_on: new Date(),
+		name: name,
+		mobile: mobile,
+		email: email,
+		age: age,
+		blood_group: blood_group,
+		gender: gender,
+		area: area,
+		address: address,
+		number_of_units: number_of_units,
+		illness: illness,
+		hospital_address: hospital_address,
+		message: message,
+		createdAt: new Date(),
+		updatedAt: new Date(),
+		requested_on: new Date(),
 	})
 		.into('blood_requests')
 		.returning('*')
@@ -49,9 +51,10 @@ const handleReqForBlood = (req, res, db) => {
 		})
 		.catch((err) => {
 			console.log(err);
-			res.status(400).json({ message: 'Wrong info or already requested' });
-		}
-		);
+			res.status(400).json({
+				message: 'Wrong info or already requested',
+			});
+		});
 };
 
 const handleReq = (req, res, db,) => {

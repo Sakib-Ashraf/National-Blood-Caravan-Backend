@@ -13,22 +13,19 @@ const handleRegister = (req, res, db, bcrypt) => {
 	const hash = bcrypt.hashSync(password);
 	db.transaction((trx) => {
 		trx.insert({
-			hash: hash,
+			password: hash,
+			name: name,
+			username: username,
 			mobile: mobile,
 			email: email,
+			joined: new Date(),
+			createdAt: new Date(),
+			updatedAt: new Date(),
 		})
-			.into('userslogin')
-			.returning('mobile')
-			.then((loginMobile) => {
+			.into('users')
+			.then((resp) => {
 				return trx('users')
 					.returning('*')
-					.insert({
-						name: name,
-						username: username,
-						mobile: loginMobile[0],
-						email: email,
-						joined: new Date(),
-					})
 					.then((user) => {
 						res.json(user[0]);
 					})
@@ -38,8 +35,7 @@ const handleRegister = (req, res, db, bcrypt) => {
 			.catch((err) => {
 				console.log(err);
 				res.status(400).json('Wrong info or already registered');
-			}
-			);
+			});
 	}).catch((err) => {
 		console.log(err);
 		res.status(400).json('Unable to register');

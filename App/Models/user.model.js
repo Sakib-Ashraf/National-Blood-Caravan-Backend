@@ -3,6 +3,7 @@ module.exports = (sequelize, Sequelize) => {
 		id: {
 			type: Sequelize.INTEGER,
 			primaryKey: true,
+			autoIncrement: true,
 		},
 		name: {
 			type: Sequelize.STRING,
@@ -18,11 +19,16 @@ module.exports = (sequelize, Sequelize) => {
 		},
 		email: {
 			type: Sequelize.STRING,
-			allowNull: false
+			allowNull: false,
 		},
 		password: {
 			type: Sequelize.STRING,
-			allowNull: false
+			allowNull: false,
+		},
+		joined: {
+			type: Sequelize.DATE,
+			allowNull: false,
+			defaultValue: Sequelize.NOW,
 		},
 	});
 

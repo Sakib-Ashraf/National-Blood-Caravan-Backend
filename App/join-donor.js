@@ -17,31 +17,28 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 	const hash = bcrypt.hashSync(password);
 	db.transaction((trx) => {
 		trx.insert({
-			hash: hash,
+			password: hash,
+			name: name,
+			username: username,
 			mobile: mobile,
 			email: email,
+			age: age,
+			birth_date: birth_date,
+			blood_group: blood_group,
+			donated: donated,
+			gender: gender,
+			area: area,
+			address: address,
+			last_donate_date: last_donate_date,
+			joined: new Date(),
+			createdAt: new Date(),
+			updatedAt: new Date(),
+			activation_date: null,
 		})
-			.into('donorslogin')
-			.returning('mobile')
-			.then((loginMobile) => {
+			.into('donors')
+			.then(donordata => {
 				return trx('donors')
 					.returning('*')
-					.insert({
-						name: name,
-						username: username,
-						mobile: loginMobile[0],
-						email: email,
-						age: age,
-						birth_date: birth_date,
-						blood_group: blood_group,
-						donated: donated,
-						gender: gender,
-						area: area,
-						address: address,
-						last_donate_date: last_donate_date,
-						joined: new Date(),
-						activation_date: null,
-					})
 					.then((donor) => {
 						res.json(donor[0]);
 					})
@@ -50,9 +47,10 @@ const handleJoinDonor = (req, res, db, bcrypt) => {
 			})
 			.catch((err) => {
 				console.log(err);
-				res.status(400).json({ message: 'Wrong info or already registered' });
-			}
-			);
+				res.status(400).json({
+					message: 'Wrong info or already registered',
+				});
+			});
 	}).catch((err) => {
 		console.log(err);
 		res.status(400).json({ message: 'Unable to register' });

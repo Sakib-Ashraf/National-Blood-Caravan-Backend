@@ -32,6 +32,29 @@ const db = knex({
 	},
 });
 
+//Sequelize connection
+const database = require("./app/models");
+const Role = database.role;
+database.sequelize.sync().then(() => {
+	console.log('Drop and Resync database');
+	
+});
+function initial() {
+  Role.create({
+    id: 1,
+    name: "user"
+  });
+ 
+  Role.create({
+    id: 2,
+    name: "moderator"
+  });
+ 
+  Role.create({
+    id: 3,
+    name: "admin"
+  });
+}
 
 const app = express();
 
